@@ -8,7 +8,8 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
 
-def load_csv(event, context):
+
+def handler(event, context):
     bucket = event['Records'][0]['s3']['bucket']['name']
     file_name = event['Records'][0]['s3']['object']['key']
 
@@ -27,3 +28,4 @@ def load_csv(event, context):
             'updated_date': values[5],
             'risk_exposure_racing': values[7]
         })
+

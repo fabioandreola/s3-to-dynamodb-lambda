@@ -62,8 +62,8 @@ provider:
       Resource: ${self:custom.s3_role_resource}
 
 functions:
-  loadCsv:
-    handler: handler.load_csv
+  loadPunters:
+    handler: functions/loadPunters.handler
     name: ${self:custom.stack_name}-load
     description: Listens to S3 ObjectCreated events to CSV files and loads it into dynamodb
     events:
@@ -74,6 +74,13 @@ functions:
             - prefix: ${self:custom.s3_key_base}
     memorySize: 128
     timeout: 30
+  getPunter:
+    handler: functions/getPunter.handler
+    description: Returns punter details
+    events:
+      - http: GET /player/{player_ref}
+    memorySize: 128
+    timeout: 20
 
 
 resources:
